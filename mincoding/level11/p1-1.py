@@ -1,14 +1,11 @@
-arr = ['D','F','G','D','A','Q']
-
 def main():
-    a, b = input().split()
-    result = False
-    for i in arr :
-        if ord(a) <= ord(i) <= ord(b):
-            result = True
-            return result
-    return result
+    n_list = input1()
+    
+    calc(*n_list)
 
-result = main()
-if result : print("발견!!!")
-else:print("미발견!!!")
+def input1():
+    return map(int,input().split())
+def calc(*numbers):
+    print(sum(numbers))
+
+main()
