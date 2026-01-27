@@ -1,0 +1,7 @@
+arr = list(input())
+a = input()
+b = input()
+c = input()
+print(f'{a}={arr.count(a)}')
+print(f'{b}={arr.count(b)}')
+print(f'{c}={arr.count(c)}')

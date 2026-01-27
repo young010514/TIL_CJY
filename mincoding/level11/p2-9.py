@@ -1,15 +1,9 @@
-arr = ['D','F','G','D','A','Q']
+arr1 = list(map(int,input().split()))
+arr = [arr1[:2:-1],arr1[2::-1]]
+arr2 = []
+for inner in arr:
+    for x in inner:
+        arr2.append(x)
 
-def main():
-    a, b = input().split()
-    result = False
-    for i in arr :
-        if ord(a) <= ord (i) <= ord(b):
-            result = True
-            return result
-        return result
-
-
-
-
-main()
+arr2[0], arr2[5] = arr2[5], arr2[0]
+[print(x, end=' ') for x in arr2]
