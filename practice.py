@@ -1,5 +1,12 @@
-arr = ['A','F','G','A','B','C']
-a, b = input().split()
-if a in arr and b in arr: print("와2개")
-elif a in arr or b in arr : print('오1개')
-else:print("우0개")
+N,A,B,C,D=map(int,input().split())
+shelters=[tuple(map(int,input().split())) for _ in range(N)]
+ 
+# Please write your code here.
+rag = []
+for i in range(C,D +1):
+    rag.append((A * i, B * i))
+result = []
+for x,y in shelters:
+    for a,b in rag:
+        result.append(abs(x-a) + abs(y-b))
+print(min(result))
