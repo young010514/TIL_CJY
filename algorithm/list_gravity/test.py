@@ -8,7 +8,7 @@ for t in range(T):
     result = 0
     for i in range(n):
         cnt =0
-        for j in range(n):
+        for j in range(i,n):
             if lst[i] > lst[j]:cnt += 1
         if cnt > result:
             result = cnt
