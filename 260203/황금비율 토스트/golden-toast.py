@@ -99,9 +99,9 @@ for com in commands:
             it = it.next
     elif com[0] == "D":
         if it != l.end():
-            l.erase(it)
+            it = l.erase(it)
     elif com[0] == "P":
-        l.insert(it,com[1])
+        l.insert(it, com[1])
 
 it = l.begin()
 while it != l.end():
