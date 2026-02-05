@@ -1,14 +1,13 @@
 def main():
-    num = int(input())
-    abc(num)
-cnt = 0
-def abc(num):
-    global cnt
-    if cnt > 3:
+    st = input()
+    abc(st, 0)
+def abc(st, idx):
+    if idx == len(st):
+        print()
         return
-    else:
-        cnt += 1
-        abc(num+2) 
-        print(num, end=' ')       
-        return num
+
+    print(st[idx], end='')
+    abc(st,idx+1)
+    print(st[idx],end='')
+
 main()
