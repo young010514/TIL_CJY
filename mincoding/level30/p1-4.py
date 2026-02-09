@@ -12,10 +12,11 @@ path =[0]*len(arr)
 def abc(idx):
     if sum(path) == len(arr):
         return
-    for i in range(len(arr[0])) :
-        if path[i] == 0 : print(i)
-    for i in range(len(arr[0])):
-        if path[i] == 0:
+    for i in range(6) :
+        if path[i] == 0 and arr[idx][i]==1: 
+            print(i)
+    for i in range(6):
+        if path[i] == 0  and arr[idx][i]==1:
             path[i] =1
             abc(i)
 print(n)
