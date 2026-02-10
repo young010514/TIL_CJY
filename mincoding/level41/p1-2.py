@@ -1,0 +1,17 @@
+n = int(input())
+lst = list(map(int,input().split()))
+now_loc = 0
+result = -21e10
+def mario(loc,score):
+    global  result
+    if loc > n:
+        if result < score:
+            result = score
+        return
+    for i in [2,7]:
+        if loc + i < n :
+            mario(loc + i, score + lst[loc + i])
+        else:
+            mario(loc + i, score)
+mario(-1,0)
+print(result)

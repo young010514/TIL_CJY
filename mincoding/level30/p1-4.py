@@ -7,18 +7,22 @@ arr = [
     [0,0,1,1,0,0],
 ]
 n = int(input())
-path =[0]*len(arr)
+used =[0]*len(arr)
 
-def abc(idx):
-    if sum(path) == len(arr):
-        return
-    for i in range(6) :
-        if path[i] == 0 and arr[idx][i]==1: 
-            print(i)
-    for i in range(6):
-        if path[i] == 0  and arr[idx][i]==1:
-            path[i] =1
-            abc(i)
+def abc(visited):
+    will_visit = []
+    if not visited : return
+    for idx in visited :
+        if sum(arr[idx]) == 0 :
+            continue
+        for i in range(6):
+            if arr[idx][i] == 1 and used[i] ==0:
+                used[i] = 1
+                will_visit.append(i)
+    for i in will_visit:
+        print(i)
+    will_visit.sort()
+    abc(will_visit)
 print(n)
-path[n]=1
-abc(n)
+used[n] = 1
+abc([n])
