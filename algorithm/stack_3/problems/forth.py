@@ -1,5 +1,5 @@
 import sys
-sys.stdin =open("input_forth.txt","r")
+sys.stdin =open("input_forth.txt", "r")
 
 T = int(input())
 for tc in range(1,T+1):

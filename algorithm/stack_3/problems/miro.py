@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open("input_miro.txt" ,"r")
+sys.stdin = open("input_miro.txt", "r")
 
 T = int(input())
 for tc in range(1,T+1):
@@ -9,12 +9,11 @@ for tc in range(1,T+1):
 
     result = 0
 
-    # start, end 찾기
+    # start 찾기
     for i in range(n):
         if arr[i].find("2") != -1:
             start = (i,arr[i].index("2"))
-        if arr[i].find("3") != -1:
-            end = (i,arr[i].index("3"))
+
     # 근접 directions
     directions = [(0,1),(0,-1),(1,0),(-1,0)]
 
@@ -22,6 +21,7 @@ for tc in range(1,T+1):
         x,y = point
         visited[x][y] = 1
         will_go = []
+
         global  result
 
         for dx, dy in directions:
