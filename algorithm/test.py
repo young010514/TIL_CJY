@@ -6,3 +6,4 @@ def check(num):
         else:return "true"
     return "false"
 print(check(y))
+print("5".isdigit())
