@@ -2,16 +2,29 @@ from collections import deque
 st = int(input())
 ed = int(input())
 result = []
+def remote(data, idx):
+    if idx == 1:
+        return data //2
+    elif idx ==2:
+        return data -1
+    elif idx == 3:
+        return data+1
+    else:
+        return data *2
+
 q = deque()
 q.append((st, 0))
 while q:
     x ,cnt= q.popleft()
     if x == ed:
-        result.append(cnt)
+        print(cnt)
         q.clear()
         break
-    if x > 0 :q.append((x-1, cnt+1))
-    if x <= 50000 : q.append((x*2,cnt+1))
-    q.append((x+1,cnt+1))
-    q.append((x//2, cnt +1))
-print(min(result))
+    if x < ed :
+        for i in range(4,-1,-1):
+            q.append((remote(x,i),cnt +1))
+    else:
+        for i in range(1,5):
+            q.append((remote(x,i), cnt+1))
+
+# print(min(result))

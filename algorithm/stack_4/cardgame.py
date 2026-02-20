@@ -5,17 +5,27 @@ T  = int(input())
 for tc in range(1,T+1):
     n = int(input())
     lst = list(map(int,input().split()))
-    user = [1]* n
-    winner = -1
+    idx = list(range(n))
 
-    print(f"\n#{tc} {winner+1}")
-    def dfs(left,right):
-        if right==left:
-            print("bottom")
-            return
-        mid = (left+right) // 2
-        dfs(left,mid)
-        dfs(mid+1,right)
-    dfs(0,n-1)
+    n //=2
+    while idx:
+
+        result = []
+        for i in range(n):
+            left= idx[2*i]
+            right= idx[2*i+1]
+            if (lst[right]-lst[left]) % 3 == 1: result.append(right)
+            else:result.append(left)
+
+        result += idx[2*n:]
+
+        if len(result) == 1:
+            winner = result[0]+1
+            break
+        idx = result
+        n = len(result) //2
+
+    print(f"#{tc} {winner}")
+
 
 
