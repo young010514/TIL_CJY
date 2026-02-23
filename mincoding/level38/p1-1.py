@@ -20,9 +20,7 @@ while q:
         print(cnt)
         q.clear()
         break
-    if x < ed :
-        for i in range(4,-1,-1):
-            q.append((remote(x,i),cnt +1))
+    gap = [abs(2*x-ed), abs(x+1-ed),abs(2//x-ed), abs(x-1-ed),]
     else:
         for i in range(1,5):
             q.append((remote(x,i), cnt+1))
