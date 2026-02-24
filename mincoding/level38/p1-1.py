@@ -20,9 +20,5 @@ while q:
         print(cnt)
         q.clear()
         break
-    gap = [abs(2*x-ed), abs(x+1-ed),abs(2//x-ed), abs(x-1-ed),]
-    else:
-        for i in range(1,5):
-            q.append((remote(x,i), cnt+1))
+    gap = [abs(2*x-ed), abs(x+1-ed),abs(2//x-ed), abs(x-1-ed)]
 
-# print(min(result))

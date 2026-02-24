@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box1 {
+      width: 200px;
+      padding-left: 25px;
+      padding-bottom: 25px;
+      margin-left: 25px;
+      margin-top: 50px;
+      margin-top: 3px;
+      border-width: 3px;
+      border-style: solid;
+      border-color: black;
+    }
+    
+    /* 단축속성으로 가능
+    border: 1px dashed black;
+            width style color 순서 무관
+    marin 이나 padding
+    4개 : 상/우/하/좌
+    3개 : 상/좌우/하
+    2개 : 상하/좌우
+    1개 : 상하좌우 */
+    .box2 {
+      width: 200px;
+      padding: 25px 50px;
+      margin: 25px auto;
+      border: 1px dashed black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">box1</div>
+  <div class="box2">box2</div>
+</body>
+
+</html>
