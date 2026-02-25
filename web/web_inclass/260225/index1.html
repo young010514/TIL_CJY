@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    div {
+      background-color: aqua;
+      border: 3px solid black;
+      width: 300px;
+      height: 50px;
+      /* margin-bottom: 10px; */
+      /* div tag 가 중간 정렬됨 */
+      margin: 30px auto;
+
+
+      text-align: center;
+      /* 임의로 가운데 정렬처럼 보이게 */
+      line-height: 50px;
+    }
+
+    span {
+      background-color: coral;
+      border: 3px dashed red;
+      font-size: 22px;
+
+      /* 이때 margin auto가 되어도 가운데 정렬이 안됨 */
+      /* inline 태그는 margin auto 를 통해 가운데 정렬 */
+      /* margin: 10px auto; */
+    }
+    /* span 태그 같이 inline 요소를 중앙정렬 하고 싶으면 p tag 같은 block 요소로 감싸서 그걸 margin auto로 해도 됨 */
+    p {
+      width: 300px;
+      margin: 30px auto;
+    }
+    #room301 {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  
+
+  </style>
+
+</head>
+<body>
+  <div>div tag는 블록 라인 요소이다</div>
+  <span>span, a, img, 태그 들은 inline 요소이다</span>
+  <span>span, a, img, 태그 들은 inline 요소이다</span>
+  <p><span>test 입니다</span></p>
+  <p id="room301"><span>test 입니다</span></p>
+
+</body>
+</html>
