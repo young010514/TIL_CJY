@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    /*  1. 자식이 [인라인 요소]일 경우 가운데 정렬 */
+    /*     (부모 div 태그에 text-align 넣기)  */
+
+    .inline_center {
+      /*부모박스*/
+      border: 3px solid red;
+      text-align: center;
+      margin: 20px;
+      height: 200px;
+    } 
+
+    .inline_center span {
+      /*자식박스*/
+      border: 3px solid black;
+      font-size: 100px;
+      line-height: 200px;
+    }
+
+    /* 2. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) */
+    /*     (자식 -> 인라인블로으로 바꾼 후)  */
+    /*     (부모 div 태그에 text-align 넣기)  */
+
+    .block_center_2 {
+      /*부모박스*/
+      border: 3px solid red;
+      margin: 20px;
+      /* 2번 - 부모박스에 text-aline 넣어주기 */
+      text-align: center;
+    }
+
+    .block_center_2 div {
+      /*자식박스*/
+      border: 3px solid black;
+      width: 100px;
+      height: 100px;
+      font-size: 100px;
+      text-align: center;
+      /*block요소 안의 글자 정렬*/
+      /* 1번 - 자식박스를 인라인블록으로 바꾼후 */
+      display: inline-block;
+    }
+
+
+    /* 3. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) */
+    /*     (부모박스에 flex,justify-content적용)  */
+
+    .block_center_3 {
+      /*부모박스*/
+      border: 3px solid red;
+      text-align: center;
+      margin: 20px;
+      display: flex;
+      justify-content: center
+    }
+
+    .block_center_3 div {
+      /*자식박스*/
+      border: 3px solid black;
+      width: 100px;
+      height: 100px;
+      font-size: 100px;
+      text-align: center;
+
+      /* 추가로 이번에는 div안에 있는 1,2,3,4 숫자도 정렬 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    /* 4. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) */
+    /*     (초기셋팅: 블록의 자식에 width너비 부여후)  */
+    /*     (margin 0px auto 적용)*/
+
+    .block_center_4 {
+      /*부모박스*/
+      border: 3px solid red;
+      margin: 20px;
+      width: 900px;
+    }
+
+    .block_center_4 div {
+      /*자식박스*/
+      border: 3px solid black;
+      width: 100px;
+      height: 100px;
+      font-size: 50px;
+      text-align: center;
+      margin: 0px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 자식이 인라인 요소일 경우 가운데 정렬 
+         (부모 div 태그에 text-align 넣기) -->
+  <div class="inline_center">
+    <span>헛</span>
+    <span>둘</span>
+    <span>셋</span>
+    <span>넷</span>
+  </div>
+
+  <!-- 2. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) -->
+  <div class="block_center_2">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+  <!-- 3. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) -->
+  <div class="block_center_3">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+
+  <!-- 4. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) -->
+  <div class="block_center_4">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    /*  1. 자식이 [인라인 요소]일 경우 가운데 정렬 */
+    /*     ( item이 1줄 일 경우 사용)  */
+    /*     (부모에 flex, aline-item 넣기)  */
+
+    .inline_center {
+      /*부모박스*/
+      border: 3px solid red;
+      height: 400px;
+      margin: 20px; 
+
+      display: flex;
+      align-items: center;
+      /* justify-content: center; 이거 주석 풀면 수평,수직 정렬*/
+    }
+
+    .inline_center span {
+      /*자식박스*/
+      border: 3px solid black;
+      font-size: 100px;
+
+    }
+
+    /*  2. 자식이 [인라인 요소]일 경우 가운데 정렬 (wrap적용후) */
+    /*     (부모에 flex적용)  */
+    /*     (부모에 wrap적용)  */
+    /*     (부모에 aline-content 넣기)  */
+
+    .inline_center_2 {
+      /*부모박스*/
+      border: 3px solid red;
+      height: 400px;
+      margin: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      /* align-content: space-evenly; */
+      /* justify-content: center; */
+
+    }
+
+    .inline_center_2 span {
+      /*자식박스*/
+      border: 3px solid black;
+      font-size: 100px;
+    }
+
+    /* 3. 자식이 [블록 요소]일 경우 가운데 정렬 (cross축) */
+    /*     (부모에 flex, flex-direction, justify-conten 부여)  */
+
+
+    .block_center_3 {
+      /*부모박스*/
+      border: 3px solid red;
+      margin: 20px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .block_center_3 div {
+      /*자식박스*/
+      border: 3px solid black;
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 자식이 [인라인 요소]일 경우 가운데 정렬 
+         (부모 div 태그에 aline-item 넣기) 
+         자식들을 한줄로 정렬할때 사용 -->
+
+  <div class="inline_center">
+    <span>하나</span>
+    <span>둘</span>
+    <span>셋</span>
+    <span>넷</span>
+  </div>
+
+  <!-- 자식이 [인라인 요소]일 경우 가운데 정렬 
+      (부모 div 태그에 aline-content 넣기) 
+      자식들이 많아서 여러줄로 나눠서 정렬할때 사용 -->
+  <div class="inline_center_2">
+    <span>하나</span>
+    <span>둘</span>
+    <span>셋</span>
+    <span>넷</span>
+    <span>다섯</span>
+    <span>여섯</span>
+    <span>일곱</span>
+
+  </div>
+
+  <!-- 3. 자식이 [블록 요소]일 경우 가운데 정렬 (main축) -->
+  <div class="block_center_3">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+
+</body>
+
+</html>

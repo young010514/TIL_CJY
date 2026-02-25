@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .test {
+      /*부모박스*/
+      border: 3px solid red;
+      height: 900px;
+      display: flex;
+      justify-content: center;
+      align-items: center; 
+    }
+
+    .item {
+      /*자식박스*/
+      border: 3px solid black;
+      font-size: 100px;
+    }
+
+    .item:nth-child(3) {
+      /*.item에서 3번째에 위치하는 요소(셋) 움직이기 */
+      align-self: flex-start;
+      /* margin-top: 100px; */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="test">
+    <div class="item">하나</div>
+    <div class="item">둘</div>
+    <div class="item">셋</div>
+    <div class="item">넷</div>
+  </div>
+
+</body>
+
+</html>
