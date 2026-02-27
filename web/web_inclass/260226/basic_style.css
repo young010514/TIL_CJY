@@ -1,0 +1,44 @@
+* {
+  /* border 라인까지 박스 사이즈를 하고 */
+  box-sizing: border-box;  
+}
+
+body {
+  /* 실행중인 스크린 크기에 맞춰 전체화면을 body로 잡았다
+  그리고 마진 0을 넣어서 html문서와 body사이의 간격을 없앳다 */
+  
+  /* 화면 사이즈와 상관없이 꽉차게 */
+  width: 100vw;
+  height: 100vh;
+  /* html 기본적으로 공백이 있음 */
+  margin: 0;
+}
+
+.item {
+  /* 컨테이너 안에 items 들의 style을 부여하고 */
+  border: 1px solid #181818;
+
+  /* html 기본 font - size 16px ==> 1.2rem 19.2px */
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 각각의 박스에 색을 달리 적용했다 */
+.color1, .color6 {
+  background-color: #d7bee2;
+}
+.color2, .color7 {
+  background-color: #a9c7d8;
+}
+.color3, .color8 {
+  background-color: #c0df9f;
+}
+.color4, .color9 {
+  background-color: #f2e5a6;
+}
+.color5, .color10 {
+  background-color: #e89d9d;
+}
