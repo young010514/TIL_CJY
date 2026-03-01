@@ -6,3 +6,5 @@ for i in range(n):
             snowman =(i,j)
         elif arr[i][j] == 3:
             jew = (i,j)
+
+
