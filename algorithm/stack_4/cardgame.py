@@ -1,31 +1,30 @@
 import  sys
 sys.stdin = open("input_cardgame.txt", "r")
 
+
+
+
+from collections import deque
 T  = int(input())
 for tc in range(1,T+1):
     n = int(input())
     lst = list(map(int,input().split()))
-    idx = list(range(n))
+    # data = []
+    # for i in range(1,n+1):
+    #     data.append((i,lst[i-1]))
 
-    n //=2
-    while idx:
 
-        result = []
-        for i in range(n):
-            left= idx[2*i]
-            right= idx[2*i+1]
-            if (lst[right]-lst[left]) % 3 == 1: result.append(right)
-            else:result.append(left)
+    def fight(left, right):
+        if (lst[left] - lst[right]) % 3 ==2 :
+            return right
+        else:return left
 
-        result += idx[2*n:]
+    def bfs(st, ed):
+        if st == ed:
+            return st
+        left = bfs(st, (st + ed) // 2)
+        right = bfs((st + ed) // 2 + 1, ed)
+        return fight(left, right)
 
-        if len(result) == 1:
-            winner = result[0]+1
-            break
-        idx = result
-        n = len(result) //2
-
+    winner = bfs(0,n-1) +1
     print(f"#{tc} {winner}")
-
-
-
