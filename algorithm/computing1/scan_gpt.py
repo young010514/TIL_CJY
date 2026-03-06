@@ -1,118 +1,100 @@
 import sys
+sys.stdin = open("input_scan.txt")
 
-sys.stdin = open("input_scan.txt", "r")
+hex_to_bin = {
+    '0':'0000','1':'0001','2':'0010','3':'0011',
+    '4':'0100','5':'0101','6':'0110','7':'0111',
+    '8':'1000','9':'1001','A':'1010','B':'1011',
+    'C':'1100','D':'1101','E':'1110','F':'1111'
+}
 
-
-# 16진법에서 2진법으로
-def to_binary(s):
-    num_16 = "0123456789ABCDEF"
-    result = []
-    for i in s:
-        num = num_16.index(i)
-        st = ''
-        while num:
-            st = str(num % 2) + st
-            num //= 2
-        result.append(st.zfill(4))
-    return ''.join(result).strip("0")
-
-
-pws = ["211", "221", "122", "411", "132", "231", "114", "312", "213", "112"]
-
-
-# 2진수 암호 해제 함수
-def password(item):
-    lst = item + "0"  # '0'으로 패딩
-    pw_data = [0]
-    cnt = 0
-    for i in range(len(lst)):
-        if len(pw_data) == 1 and lst[i] == "0" and cnt == 0:
-            continue
-        if len(pw_data) == 1 and lst[i] == "1":
-            cnt += 1
-            continue
-        prev = lst[i - 1]
-        now = lst[i]
-        if prev != now:
-            pw_data.append(cnt)
-            cnt = 1
-            continue
-        else:
-            cnt += 1
-
-    last_sum = 0
-    for i in range(4):
-        last_sum += pw_data[-i - 1]
-    pw_data[0] = last_sum - pw_data[1] - pw_data[2] - pw_data[3]
-
-    return pw_data
-
-
-def find_pw(lst):
-    sum_4 = 0
-    Sum = 0
-    result = 0
-
-    # 길이가 충분한지 확인하고 마지막 4개 값을 더하기
-    if len(lst) < 4:
-        return 0  # 길이가 부족하면 0을 반환
-
-    for i in range(4):
-        sum_4 += lst[-i - 1]
-
-    if sum_4 % 7 != 0:
-        return 0
-
-    if sum_4 != 7:
-        divide = sum_4 // 7
-        for i in range(32):
-            if lst[i] % divide != 0:
-                return 0
-            lst[i] = lst[i] // divide
-
-    for i in range(8):
-        if 4 * i + 4 <= len(lst):  # 인덱스 범위를 확인하여 슬라이싱을 진행
-            item = ''.join(list(map(str, lst[4 * i + 1:4 * i + 4])))
-            if item not in pws:
-                return 0
-            rst = pws.index(item)
-            result += rst
-            if i % 2 == 0:
-                Sum += 3 * rst
-            else:
-                Sum += rst
-        else:
-            return 0  # 리스트 범위를 벗어나면 0을 반환
-
-    if Sum % 10 != 0:
-        return 0
-    return result
-
+code = {
+    (3,2,1):0,
+    (2,2,1):1,
+    (2,1,2):2,
+    (1,4,1):3,
+    (1,3,2):4,
+    (1,2,3):5,
+    (1,1,4):6,
+    (1,3,1):7,
+    (1,2,1):8,
+    (3,1,1):9
+}
 
 T = int(input())
-for tc in range(1, T + 1):
-    n, m = map(int, input().split())
-    arr = [input().strip() for _ in range(n)]
-    data_set = []
-    final = 0
 
-    for i in range(n):
-        arr_i = arr[i].strip("0")
-        if arr_i:
-            s_strip = arr[i].strip("0").split("00000")
-            for item in s_strip:
-                item_strip = item.strip("0")
-                if item_strip and item_strip not in data_set:
-                    data_set.append(item_strip)
+for tc in range(1, T+1):
 
-    find_lst = []
-    for item in data_set:
-        bin_item = to_binary(item)
-        if bin_item not in find_lst:
-            find_lst.append(bin_item)
+    N, M = map(int,input().split())
+    arr = [input().strip() for _ in range(N)]
 
-    for i in find_lst:
-        pw_data = password(i)
-        final += find_pw(pw_data)
+    visited = set()
+    answer = 0
 
-    print(f"#{tc} {final}")
+    for row in arr:
+
+        binary = ''.join(hex_to_bin[c] for c in row)
+
+        idx = len(binary)-1
+
+        while idx >= 55:
+
+            if binary[idx] == '1':
+
+                c2 = c3 = c4 = 0
+
+                while binary[idx] == '1':
+                    c2 += 1
+                    idx -= 1
+
+                while binary[idx] == '0':
+                    c3 += 1
+                    idx -= 1
+
+                while binary[idx] == '1':
+                    c4 += 1
+                    idx -= 1
+
+                k = min(c2,c3,c4)
+
+                pattern = (c4//k, c3//k, c2//k)
+
+                if pattern in code:
+
+                    nums = []
+                    nums.append(code[pattern])
+
+                    for _ in range(7):
+
+                        c2=c3=c4=0
+
+                        while binary[idx] == '1':
+                            c2+=1; idx-=1
+                        while binary[idx] == '0':
+                            c3+=1; idx-=1
+                        while binary[idx] == '1':
+                            c4+=1; idx-=1
+
+                        k = min(c2,c3,c4)
+                        pattern = (c4//k, c3//k, c2//k)
+
+                        nums.append(code[pattern])
+
+                    nums.reverse()
+
+                    key = tuple(nums)
+
+                    if key not in visited:
+
+                        visited.add(key)
+
+                        odd = nums[0]+nums[2]+nums[4]+nums[6]
+                        even = nums[1]+nums[3]+nums[5]
+
+                        if (odd*3 + even + nums[7]) % 10 == 0:
+                            answer += sum(nums)
+
+            else:
+                idx -= 1
+
+    print(f"#{tc} {answer}")
