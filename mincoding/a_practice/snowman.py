@@ -8,3 +8,13 @@ for i in range(n):
             jew = (i,j)
 
 
+
+
+
+
+
+
+
+
+
+
