@@ -84,20 +84,21 @@
 
 # =====================================
 
+# two pointer algorithm
+
 n,m = map(int,input().split())
 arr = list(map(int,input().split()))
-lft, rgt = 0,0
-Sum = 0
-cnt = 0
-while lft < n:
-    if Sum >= m or rgt >= n-1 :
-        Sum -= arr[lft]
-        lft += 1
-    elif Sum < m:
-        Sum += arr[rgt]
-        rgt += 1
-        continue
+cnt,Sum = 0,0
+right,left = 0,0
 
+while left < n:
+
+    if Sum >= m or right == n:
+        Sum -= arr[left]
+        left += 1
+    elif Sum < m:
+        Sum += arr[right]
+        right += 1
     if Sum == m : cnt += 1
 
 print(cnt)
