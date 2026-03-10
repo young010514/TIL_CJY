@@ -3,6 +3,7 @@ sys.stdin = open("input_mincost.txt","r")
 
 def bfs(x, Sum):
     global y_axis, n, result
+    if Sum > result : return
     if x == n :
         if result > Sum:
             result = Sum
