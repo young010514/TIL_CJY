@@ -3,7 +3,7 @@ T = int(input())
 def dfs(level,x,y, st):
     global result
     if level == 7:
-        if st in result : return
+        # if st in result : return
         result.append(st)
         return
     for i,j in dts:
@@ -18,4 +18,4 @@ for tc in range(1,T+1):
     for i in range(4):
         for j in range(4):
             dfs(0,i,j, "")
-    print(f"#{tc} {len(result)}")
+    print(f"#{tc} {len(set(result))}")
