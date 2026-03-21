@@ -6,6 +6,7 @@ c = oct(a)
 d = hex(a)
 print(b,c,d)
 
+
 # 2,8,16 진수를 10진수로 바꾸기
 print(int(b,2))
 print(int(c,8))
