@@ -10,6 +10,9 @@ for _ in range(m):
     lst[b].append(a)
 
 
+    
+
+
 finresult = [0] * (n+1)
 # 시작인덱스
 for i in range(1,n+1):
