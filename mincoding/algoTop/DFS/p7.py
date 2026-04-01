@@ -11,6 +11,9 @@ def findb(x):
     arr[x] = ret
     return ret
 
+
+    
+
 def union(a,b):
     global arr
     fa = findb(a)

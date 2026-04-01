@@ -4,3 +4,9 @@ q = int(input())
 qlst = [list(map(int,input().split())) for _ in range(q)]
 
 
+
+
+
+
+
+
