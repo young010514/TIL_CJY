@@ -9,10 +9,7 @@ def findb(x):
         return x
     ret =  findb(arr[x])
     arr[x] = ret
-    return ret
-
-
-    
+    return ret    
 
 def union(a,b):
     global arr
@@ -28,6 +25,7 @@ def union(a,b):
     else:
         arr[fb] = fa
         rank[fa] += 1
+
 
 def round1(x):
     roundlst = [nlst[x-1]]
