@@ -1,6 +1,7 @@
 n,m = map(int,input().split())
 nlst= [tuple(map(int,input().split())) for _ in range(n)]
 
+
 arr = [0] * (n+1)
 rank = [0] * (n+1)
 
@@ -10,6 +11,8 @@ def findb(x):
     ret =  findb(arr[x])
     arr[x] = ret
     return ret    
+
+
 
 def union(a,b):
     global arr
