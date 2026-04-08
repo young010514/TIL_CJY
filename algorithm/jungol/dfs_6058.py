@@ -1,3 +1,3 @@
-n = int(input())
-arr = [input() for _ in range(n)]
+# n = int(input())
+# arr = [input() for _ in range(n)]
 
