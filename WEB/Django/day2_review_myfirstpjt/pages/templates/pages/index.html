@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>page 앱의 test 입니다.</h1>
+<h2>{{name}} 님 반갑습니다</h2>
+<a href="{% url "index" %}">아티클스 앱으로 이동</a>
+<h3>{{message}}를 잘 받았습니다</h3>
+{% endblock content%}

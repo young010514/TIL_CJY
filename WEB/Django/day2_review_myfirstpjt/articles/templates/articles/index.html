@@ -1,0 +1,28 @@
+{% extends "articles/base.html" %}
+
+{% block content%}
+<h1>15기 5반 화이팅 후후훗!</h1>
+
+<h1>Hi {{name|lower}}</h1>
+<h1>나이는 : {{age|add:2}}</h1>
+
+{% if age == 21 %}
+  <p>나는 너의 나이가 부럽지 않아</p>
+{% endif %}
+
+<a href="{% url "pages:index" name %}">페이지스로 넘어가기</a>
+<h1>Throw</h1>
+<form action="{% url "pages:index" name %}" method='GET'>
+  <label for="minho">Throw를 연습하자</label>
+  <input type="text" id='minho' name='msg'>
+  <input type="submit">
+</form>
+
+
+
+{% for color in colors %}
+<li>{{color}}</li>
+{% endfor %}
+
+
+{% endblock content%}
