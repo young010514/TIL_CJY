@@ -5,7 +5,7 @@
 <hr>
 {% for article in articles %}
   <div>
-    <p>글 번호(pk): {{ article.pk }}</p>
+    <p>글 번호: {{ article.pk }}</p>
     <p>글 제목: <a href="{% url "articles:detail" article.pk %}">{{ article.title }}</a></p>
     <p>글 내용: {{ article.content }}</p>
   </div>
