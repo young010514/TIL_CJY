@@ -1,58 +1,99 @@
-import sys
+import copy
 
-sys.stdin = open('input.txt', 'r')
+# 지금 보는 방향에서 오앞왼뒤 이동했을때의 y offset 
+ydir = [
+    # 오앞왼뒤
+    (1,0,-1,0), # 오 
+    (0,-1,0,1), # 앞 
+    (-1,0,1,0), # 왼 
+    (0,1,0,-1)  # 뒤 
+]
 
+# 지금 보는 방향에서 오앞왼뒤 이동했을때의 x offset
+xdir = [
+    # 오앞왼뒤
+    (0,1,0,-1), # 오
+    (1,0,-1,0), # 앞
+    (0,-1,0,1), # 왼
+    (-1,0,1,0)  # 뒤
+]
 
-def solve(tc):
-    n, m = map(int, input().split())
-    farming = [list(map(int, input().split())) for _ in range(n)]
-    diry = [0, 1, 0, -1]
-    dirx = [1, 0, -1, 0]
+# 지금 보는 방향에서 오앞왼뒤 이동하고 나서 보는 방향
+face  = [
+    # 오앞왼뒤
+    (3, 0, 1, 2), #오 
+    (0, 1, 2, 3), #앞
+    (1, 2, 3, 0), #왼
+    (2, 3, 0, 1)  #뒤
+]
 
-    def FindMax(sty, stx, std):
-        harvest = [[0] * n for _ in range(n)]  # 곡식이 열리는 날짜 저장
-        seed = [[0] * n for _ in range(n)]  # 씨를 몇 번 심었는지
-        total = 0
-        y, x, d = sty, stx, std
-        # 로봇이 m일동안 일함
-        for day in range(1, m + 1):
-            # --준비: 다음 칸으로 이동 가능 여부 확인--
-            can_move = False
-            for i in [1, 0, 3, 2]:
-                nxtd = (d + i) % 4
-                nxty, nxtx = y + diry[nxtd], x + dirx[nxtd]
-                if nxty < 0 or nxty >= n or nxtx < 0 or nxtx >= n: continue  # 배열 범위를 벗어나면 continue
-                if farming[nxty][nxtx] == 1: continue  # 장애물이 있는 경우 못감
-                if harvest[nxty][nxtx] == 0 or day >= harvest[nxty][nxtx]:
-                    can_move = True
-                    ty, tx, td = nxty, nxtx, nxtd
-                    break
+def sim(y, x, dir) :
 
-            # --오전 업무--
-            # 수확
-            if harvest[y][x] != 0 and day >= harvest[y][x]:  # 곡식이 열리면, 현재 위치에서 수확
-                total += 1
-                harvest[y][x] = 0
-            # 씨 심기
-            elif can_move and harvest[y][x] == 0:
-                seed[y][x] += 1  # 씨를 심은 횟수 저장
-                harvest[y][x] = day + 1 + 3 + seed[y][x]
-            # --오후 업무--
-            if can_move:
-                y, x, d = ty, tx, td  # 내일 이동할 곳
-        return total
+    days = M
+    cnt = 0
+    seedcnt = [[0 for _ in range(N)] for _ in range(N)]
+    seeds = []
+    
+    while days > 0 :
+        harvested = False
+        days -= 1
 
-    max_farm = 0
-    for i in range(n):
-        for j in range(n):
-            if farming[i][j] != 1:
-                for k in range(4):
-                    result = FindMax(i, j, k)
-                    max_farm = max(max_farm, result)
+        size = len(seeds) 
+        for _ in range(size) :
+            now = seeds.pop(0)
+            now[2] += 1
+            if now[2] == (3 + seedcnt[now[0]][now[1]]) :
+                mapcopy[now[0]][now[1]] = 3
+            else :
+                seeds.append(now)
 
-    print(f'#{tc}', max_farm)
+        if mapcopy[y][x] == 3 :
+            cnt += 1
+            mapcopy[y][x] = 0
+            harvested = True 
 
+        nextdir = -1
+        for i in range(4) :
+            ny = y + ydir[dir][i]
+            nx = x + xdir[dir][i]
+            if mapcopy[ny][nx] == 1 or mapcopy[ny][nx] == 2 :
+                continue
+            nextdir = i
+            break 
+
+        if nextdir == -1 :
+            continue 
+
+        if mapcopy[y][x] == 0 and harvested == False: 
+            mapcopy[y][x] = 2
+            seedcnt[y][x] += 1
+            seeds.append([y, x, -1])
+
+        y = y + ydir[dir][nextdir]
+        x = x + xdir[dir][nextdir]
+        dir = face[dir][nextdir]
+
+    return cnt
+        
 
 T = int(input())
-for tc in range(1, T + 1):
-    solve(tc)
+for tc in range(1, T+1) :
+
+    # input 
+    N, M = list(map(int, input().split()))
+    MAP = [list(map(int, input().split())) for _ in range(N)]
+    ans = 0
+
+    # solve - 모든 위치에서 모든 방향으로 두기
+    for i in range(N) :
+        for j in range(N) : 
+            # 산이라면 pass
+            if MAP[i][j] == 1 : 
+                continue 
+            for d in range(4) : 
+                mapcopy = copy.deepcopy(MAP)
+                temp = sim(i, j, d) 
+                ans = max(temp, ans)
+
+    # output
+    print(f"#{tc} {ans}")
