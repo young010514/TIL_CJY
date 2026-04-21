@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>이곳에 할 일을 생성합니다.</h1>
+
+  <img src="{% static "todos/ssafy_ai.png" %}" alt="logo">
+
+  <form action="{% url 'todos:create_todo' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+
+    <input type="submit" value="제출하기" />
+  </form>
+{% endblock %}

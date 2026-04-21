@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static "style.css" %}">
+
+  {% include "test.html" %}
+
+  <h1>할 일 목록 상세 페이지</h1>
+  <h1>{{user}} 님의 할 일 목록 페이지</h1>
+  <img src="{% static "ssafy.jpg" %}" alt="ssafy">
+
+  <ul>
+    {% for todo in todo_list %}
+      <li>
+        <a href="{% url "todos:detail" todo.pk %}">{{ todo.work }}</a>
+        <p>완료 여부 : {{ todo.is_completed }}</p>
+      </li>
+    {% empty %}
+      <li>아직 등록 된 할 일이 없습니다.</li>
+    {% endfor %}
+
+  </ul>
+
+{% endblock %}
