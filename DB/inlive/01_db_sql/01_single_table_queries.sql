@@ -14,7 +14,13 @@ From
 ORDER BY
   FirstName ASC;
 
-
+SELECT
+  Country,City
+From
+  customers
+ORDER BY
+  Country DESC,
+  City;
 
 
 
