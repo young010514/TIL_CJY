@@ -1,3 +1,4 @@
+-- Active: 1777334524589@@127.0.0.1@3306
 -- 01. Querying data
 SELECT 
   LastName 

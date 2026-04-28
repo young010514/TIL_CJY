@@ -3,6 +3,12 @@ PRAGMA table_info('examples');
 
 -- 1. Create a table
 
+CREATE TABLE examples(
+    ExamId INTEGER PRIMARY KEY AUTOINCREMENT,
+    LastName VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL
+);
+
 -- 2. Modifying table fields
 -- 2.1 ADD COLUMN
 
