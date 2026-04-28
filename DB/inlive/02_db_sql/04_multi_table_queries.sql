@@ -1,3 +1,4 @@
+-- Active: 1777340214644@@127.0.0.1@3306
 -- 공통
 SELECT * FROM articles;
 SELECT * FROM users;
@@ -39,6 +40,38 @@ VALUES
 
 
 -- INNER JOIN
+SELECT articles.title, users.name
+FROM articles
+INNER JOIN users
+  ON articles.userId = users.id
+WHERE users.id = 1;
+
+-- 옛날 방식 코드
+-- SELECT * 
+-- FROM articles, users
+-- WHERE users.id = articles.userId;
+
+-- SQL 표준
+-- SELECT *  
+-- FROM articles
+-- INNER JOIN users
+--   ON articles.userId = users.id;
 
 
 -- LEFT JOIN
+-- 1단계
+SELECT * FROM users
+LEFT JOIN articles
+  ON articles.userId = users.id;
+
+-- 2단계
+SELECT * FROM users
+LEFT JOIN articles
+  ON articles.userId = users.id
+WHERE articles.userId IS NULL;
+
+-- 3단계
+SELECT users.name FROM users
+LEFT JOIN articles
+  ON articles.userId = users.id
+WHERE articles.userId IS NULL;
