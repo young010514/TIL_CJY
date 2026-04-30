@@ -1,10 +1,10 @@
 #파이썬에서 HTML 데이터를 분석할때 사용하는 패키지 BeautifulSoup(핵심 클래스)
 #https://beautiful-soup-4.readthedocs.io/en/latest/
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 #https://requests.readthedocs.io/en/latest/
-# import requests
+import requests
 #표준 라이브러리(Standard Library) 필요할때 사용하기 vs Built-in Functions
-# from pprint import pprint
+from pprint import pprint
 
 def crawling_basic():
     """
@@ -38,23 +38,23 @@ def crawling_basic():
 
     # BeautifulSoup 객체 생성 (파싱 시작)
     # 'html.parser'는 파이썬 기본 엔진을 쓰겠다는 뜻
-    # soup = BeautifulSoup(html_doc, 'html.parser')
+    soup = BeautifulSoup(html_doc, 'html.parser')
 
     # print(soup)
     # print(soup.prettify())
     # print(soup.title)
 
-    # response = requests.get("http://quotes.toscrape.com/tag/love/")
+    response = requests.get("http://quotes.toscrape.com/tag/love/")
 
     #__repr__
     #ex) <urllib3.response.HTTPResponse object at 0x000001AD4D365150> -> <Response [200]>
     # print(response)
     # print(response.__dict__)
-    # pprint(response.__dict__)
+    pprint(response.__dict__)
 
-    # html_doc = response.text
+    html_doc = response.text
 
-    # print(html_doc)
+    print(html_doc)
 
     # soup = BeautifulSoup(html_doc, 'html.parser')
 
