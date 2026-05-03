@@ -7,7 +7,9 @@ def comb(n, k):
         return 0
     k = min(k, n - k)  # 대칭성 활용
 
+
     res = 1
+
     for i in range(1, k + 1):
         res = res * (n - i + 1) // i
     return res
