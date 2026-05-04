@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods, require_safe, require_POST
 
 from .forms import ArticleForm, CommentForm
 from .models import Article, Comment
 
 
+@require_safe
 def index(request):
     articles = Article.objects.all()
     context = {
@@ -27,7 +29,7 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 
-
+@require_safe
 def detail(request, article_id):
     article = Article.objects.get(pk=article_id)
     comment_form = CommentForm()
