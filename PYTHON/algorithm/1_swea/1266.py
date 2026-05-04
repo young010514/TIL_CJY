@@ -7,12 +7,16 @@ def comb(n, k):
         return 0
     k = min(k, n - k)  # 대칭성 활용
 
+
     res = 1
+
     for i in range(1, k + 1):
         res = res * (n - i + 1) // i
     return res
 
 def main(x): # 소수가 아닐 확률 구하기
+    
+
     
     # 소수 : 2,3,5,7,11,13,17
     arr = [2,3,5,7,11,13,17]
