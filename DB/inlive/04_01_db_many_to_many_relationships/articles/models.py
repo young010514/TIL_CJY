@@ -15,7 +15,14 @@ class Article(models.Model):
     # 지연 평가는 ORM에서도 쓰임. Ariticle.objects.all() 자체는 DB에 요청을 보내지 않음
     # list()로 형변환 하거나 반복 시점에 실행됨. 이렇게 실제 데이터를 활용할때 평가를 진행.
     # "지금 당장 평가하지 않고, 정말 필요할 때 평가한다." ==> 성능과 유연성
+    
+    # 게시글 작성에 관련한 참조키
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
+    # 기능적으로 어떤 명칭이 더 좋을지 고민해보기 
+    # 이미 위에 user 참조중이므로  related_name으로 역참조 할떄  이름 바꿔줘야함 
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_articles")
+    
     title = models.CharField(max_length=10)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

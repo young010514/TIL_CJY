@@ -15,7 +15,8 @@ class Patient(models.Model):
     def __str__(self):
         return f'{self.pk}번 환자 {self.name}'
 
-
+#  커스텀 가능  / 예를들어 진료 내역 같은 것들
+# through 활용
 class Reservation(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

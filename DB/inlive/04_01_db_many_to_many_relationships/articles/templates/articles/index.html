@@ -29,6 +29,16 @@
       <div>
         글 제목: <a href="{% url "articles:detail" article.pk %}">{{ article.title }}</a>
       </div>
+      <div>
+        <form action="{% url "articles:likes" article.pk %}" method = 'POST'>
+          {% csrf_token %}
+          {% if request.user in article.like_users.all %}
+            <input type="submit" value="좋아요 취소">
+          {% else %}
+            <input type="submit" value='좋아요'>
+          {% endif %}
+          </form>
+      </div>
     </div>
     <hr>
   {% endfor %}

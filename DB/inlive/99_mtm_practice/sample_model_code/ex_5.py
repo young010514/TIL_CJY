@@ -10,6 +10,7 @@ class Doctor(models.Model):
 
 class Patient(models.Model):
     # ManyToManyField - related_name 작성
+                                    # 역참조 할때 patient_set. 안쓰고 바꿀수 있도록?>
     doctors = models.ManyToManyField(Doctor, related_name='patients')
     name = models.TextField()
 

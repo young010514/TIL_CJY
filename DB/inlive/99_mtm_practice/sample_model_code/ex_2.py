@@ -32,7 +32,7 @@ patient1 = Patient.objects.create(name='carol')
 Reservation.objects.create(doctor=doctor1, patient=patient1)
 
 doctor1.reservation_set.all()
-patient1.reservation_set.all()
+c
 
 patient2 = Patient.objects.create(name='duke')
 Reservation.objects.create(doctor=doctor1, patient=patient2)

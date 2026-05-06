@@ -16,4 +16,7 @@ urlpatterns = [
         views.comments_delete, 
         name='comments_delete'
     ),
+
+    # 좋아요
+    path('<int:article_id>/like/',views.likes, name='likes'),
 ]
