@@ -14,6 +14,7 @@
       <input type="submit" value="회원탈퇴">
     </form>
     <a href="{% url "accounts:update" %}">회원정보 수정</a>
+    <a href="{% url "accounts:profile" request.user.username %}">내 프로필</a>
   {% else %}
     <a href="{% url "accounts:login" %}">로그인</a> |
     <a href="{% url "accounts:signup" %}">회원가입</a>
@@ -23,7 +24,10 @@
   
   {% for article in articles %}
     <div>
-      <div>작성자: {{ article.user.username }}</div>
+      <div>작성자: 
+        <a href="{% url "accounts:profile" article.user.username %}">
+          {{ article.user.username }}</div>
+        </a>
       {% comment %} <div>작성자: {{ article.user }}</div> {% endcomment %}
       <div>글 번호: {{ article.pk }}</div>
       <div>

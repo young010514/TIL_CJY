@@ -1,6 +1,6 @@
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.shortcuts import redirect, render
@@ -86,3 +86,34 @@ def password(request):
         'form': form,
     }
     return render(request, 'accounts/password.html', context)
+
+
+def profile(request,username):
+    
+    # 이 프로필이 누구의 프로필 계정인지 조회
+    User = get_user_model()
+    person = User.objects.get(username=username) 
+    context = {
+        'person':person,
+    }
+    return render(request,'accounts/profile.html', context)
+
+
+def follow(request,user_id):
+    me = request.user
+    User = get_user_model()
+    you = User.objects.get(pk=user_id)
+
+
+    # 나 자신을 팔로우할 순 없음
+    if me != you :
+        # 내가 너의 팔로워 목록에 있다면 관계를 제거
+        if me in you.followers.all():
+            you.followers.remove(me)
+            # me.followings.remove(you)
+
+        # 아니라면 관계를 추가
+        else:
+            you.followers.add(me)
+            # me.followings.add(you)
+    return redirect('accounts:profile', you.username)
