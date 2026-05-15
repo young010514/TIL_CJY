@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <h1 id="title">과일목록</h1>
+        <ul id="fruit-list">
+            <li class="fruit red">사과</li>
+            <li class="fruit yellow">바나나</li>
+            <li class="fruit orange">오렌지</li>
+        </ul>
+    <div id="info-box"></div>
+    <script>
+        // ID로 요소 선택하기
+        const title = document.getElementById('title');
+        console.log(title);
+        
+        // CSS 선택자로 첫번째 일치하는 요소 선택하기
+        const container = document.querySelector('#container');
+        console.log(container);
+        
+        // 첫번째 과일 항목 선택하기
+        const firstFruit = document.querySelector('.fruit');
+        console.log(firstFruit);
+
+        // 클래스로 여러 요소 선택하기
+        const fruits = document.getElementsByClassName('fruit');
+        console.log(fruits);
+
+        // 유사 배열이 아닌 진짜 배열로 변환
+        const arr=Array.from(fruits);
+        console.log(arr);
+        
+        // css 선택자로 여러 요소 선택하기
+        const fruitItems=document.querySelectorAll('.fruit');
+        console.log(fruitItems);
+
+        // 모든 과일 항목 반복하기
+        fruitItems.forEach(fruit => {
+            console.log(fruit.textContent);
+        });
+
+
+    </script>
+
+    </div>
+    
+</body>
+</html>
