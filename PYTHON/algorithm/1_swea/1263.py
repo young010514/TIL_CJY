@@ -5,3 +5,5 @@ T=  int(input())
 for tc in range(1,T+1):
     arr = list(map(int,input().split()))
     n = arr[0]
+    print(n, len(arr))
+    print(arr[1:18])
