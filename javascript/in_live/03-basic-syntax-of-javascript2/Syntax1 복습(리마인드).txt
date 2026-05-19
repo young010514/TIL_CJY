@@ -1,0 +1,22 @@
+Syntax1 복습(리마인드)
+
+- 데이터 타입
+    - 원시 자료형(number, string, boolean, null, undefined), 불변, 값을 복사해서 저장한다.
+    - number: 정수/실수 구분이 없다.
+    - string: 문자열, 템플릿 리터럴(텍스트 안에 변수 넣기, `${변수명}`)
+    - boolean: true/false
+    - null: 의도적으로 값이 없음
+    - undefined: 값이 할당되지 않음
+    - 참조 자료형(array, object, function, class), 가변, 주소를 복사
+        - 함수
+            - 선언식: 일반적으로 사용하는 함수 방식
+            - function arrow (args){}
+            - 표현식: 변수에 함수를 할당해서 사용, 호이스팅 X
+                - const arrow = function(name) { return 'hello' }
+                - const arrow = name => { name }
+                - const = arrow = () =>
+- 연산자
+    - 대부분 파이썬이랑 비슷하다 ( and, or )
+    - 증감 연산자( ++, -- ) : 1을 더하거나 뺀다. 연산자 위치에 따라서 더해지는 타이밍이 다르다.
+    - == : 동등 연산자, 타입 비교 X, 암묵적 형변환을 통해서 타입을 맞추고 비교한다. ( 1 == '1', true)
+    - === : 일치 연산자, 타입까지 비교한다. ( 1 === '1' , false)
