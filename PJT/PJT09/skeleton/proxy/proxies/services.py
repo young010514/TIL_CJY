@@ -1,4 +1,4 @@
-"""
+""" 
 교육생 구현 영역: MODEL_SERVER_URL( FastAPI 모델 서버 )로 HTTP POST 요청을 보내고
 응답을 파싱해 반환하세요. get_chat_response 는 예시로 구현되어 있습니다.
 나머지는 None 대신 실제 로직을 구현하세요. (에러 시 None 반환)
@@ -28,34 +28,144 @@ def get_chat_response(chat_request):
 def get_chat_guardrail_response(guardrail_request):
     """prompt 를 모델 서버 /chat/guardrail 로 보내고 is_appropriate 를 반환합니다."""
     # TODO: POST { "prompt": ... } -> 응답 { "is_appropriate": bool }
-    return None
+    payload_data = {
+        'prompt':guardrail_request['prompt'],
+    }
+    try :
+        response = requests.post(
+            f'{MODEL_SERVER_URL}/chat/guardrail',
+            json=payload_data
+        )
+        response.raise_for_status()
+        is_appropriate = response.json()['is_appropriate']
+        return {
+            'is_appropriate':is_appropriate
+        }
+    except Exception as  e:
+        print(f'[서비스 에러 발생] {e}')
+        return None
 
 
 def get_chat_score_response(score_request):
     """messages, answer 를 모델 서버 /chat/score 로 보내고 score, reason 을 반환합니다."""
     # TODO: POST { "messages": ..., "answer": ... } -> 응답 { "score": int, "reason": str }
-    return None
+    payload_data = {
+        'messages':score_request['messages'],
+        'answer':score_request['answer'],
+    }
+    try:
+        response = requests.post(
+            f"{MODEL_SERVER_URL}/chat/score",
+            json=payload_data
+        )
+        response.raise_for_status()
+
+        data = response.json()
+
+        return {
+            "score": data["score"],
+            "reason": data["reason"]
+        }
+
+    except Exception as e:
+        print(f"[서비스 에러 발생] {e}")
+        return None
 
 
 def get_image_generation_response(gen_request):
     """prompt 를 모델 서버 /images/generations 로 보내고 url 을 반환합니다."""
     # TODO: POST { "prompt": ... } -> 응답 { "url": str }
-    return None
+    payload_data = {
+        "prompt": gen_request["prompt"]
+    }
 
+    try:
+        response = requests.post(
+            f"{MODEL_SERVER_URL}/images/generations",
+            json=payload_data
+        )
+        response.raise_for_status()
+
+        url = response.json()["url"]
+
+        return {
+            "url": url
+        }
+
+    except Exception as e:
+        print(f"[서비스 에러 발생] {e}")
+        return None
 
 def get_image_score_response_for_url(score_request):
     """question, image_url 을 모델 서버 /images/score/url 로 보내고 score, reason 을 반환합니다."""
     # TODO: POST { "question": ..., "image_url": ... } -> 응답 { "score": int, "reason": str }
-    return None
+    payload_data = {
+        "prompt": gen_request["prompt"]
+    }
+
+    try:
+        response = requests.post(
+            f"{MODEL_SERVER_URL}/images/generations",
+            json=payload_data
+        )
+        response.raise_for_status()
+
+        url = response.json()["url"]
+
+        return {
+            "url": url
+        }
+
+    except Exception as e:
+        print(f"[서비스 에러 발생] {e}")
+        return None
 
 
 def get_decide_route_response(route_request):
     """prompt 를 모델 서버 /decide-route 로 보내고 route 를 반환합니다."""
     # TODO: POST { "prompt": ... } -> 응답 { "route": str }
-    return None
+    payload_data = {
+        "prompt": route_request["prompt"]
+    }
+
+    try:
+        response = requests.post(
+            f"{MODEL_SERVER_URL}/decide-route",
+            json=payload_data
+        )
+        response.raise_for_status()
+
+        route = response.json()["route"]
+
+        return {
+            "route": route
+        }
+
+    except Exception as e:
+        print(f"[서비스 에러 발생] {e}")
+        return None
 
 
 def get_tts_response(tts_request):
     """text 를 모델 서버 /generate-speech 로 보내고 audio_data 를 반환합니다."""
     # TODO: POST { "text": ... } -> 응답 { "audio_data": str }
-    return None
+    payload_data = {
+        "text": tts_request["text"]
+    }
+
+    try:
+        response = requests.post(
+            f"{MODEL_SERVER_URL}/generate-speech",
+            json=payload_data
+        )
+        response.raise_for_status()
+
+        audio_data = response.json()["audio_data"]
+
+        return {
+            "audio_data": audio_data
+        }
+
+    except Exception as e:
+        print(f"[서비스 에러 발생] {e}")
+        return None

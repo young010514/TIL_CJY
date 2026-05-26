@@ -1,0 +1,21 @@
+# Django 중간 서버 (proxy)
+Django==5.2.6
+django-cors-headers==4.3.1
+djangorestframework==3.16.1
+
+# FastAPI 모델 서버 (openai)
+fastapi==0.121.0
+uvicorn==0.38.0
+python-multipart==0.0.20
+
+# 공통
+python-dotenv==1.2.1
+requests==2.32.5
+
+# openai — GMS 대비 LangChain (OpenAI API 요청 시)
+langchain==1.2.0
+langchain-openai==1.1.6
+langchain-community==0.4.1
+
+# 배포용
+gunicorn==23.0.0

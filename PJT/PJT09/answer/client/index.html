@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./chat.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>SSAFY Chat</title>
+  </head>
+  <body>
+    <div class="root">
+      <nav>
+        <ul>
+          <li>
+            <a href="./index.html">채팅</a>
+          </li>
+          <li>
+            <a href="./pages/tts.html">TTS 챗봇</a>
+          </li>
+        </ul>
+      </nav>
+      <main class="chat-main first-page">
+        <h1 class="chat-title">무엇이든 물어보세요.</h1>
+        <h2 class="chat-description">
+          간단히 질문하거나, 파일을 첨부할 수 있습니다.
+        </h2>
+        <ul class="chat-ul"></ul>
+        <div class="chat-input-container">
+          <div class="chat-input-wrapper">
+            <div class="file-preview-container"></div>
+            <input
+              class="chat-input"
+              type="text"
+              placeholder="Send a message"
+            />
+          </div>
+          <div class="file-add-btn-wrapper">
+            <button class="file-add-btn">
+              <span>+</span>
+              <input type="file" class="file-input" />
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>

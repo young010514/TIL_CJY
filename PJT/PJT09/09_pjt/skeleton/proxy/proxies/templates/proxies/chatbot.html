@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guardrail Chatbot</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background: #f4f6f8;
+      color: #111827;
+    }
+    .app {
+      width: min(760px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-left: 1px solid #d7dde5;
+      border-right: 1px solid #d7dde5;
+    }
+    header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #d7dde5;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+    .status {
+      min-height: 34px;
+      padding: 8px 20px;
+      border-bottom: 1px solid #d7dde5;
+      color: #475569;
+      font-size: 14px;
+      background: #f8fafc;
+    }
+    .loader {
+      display: none;
+      width: 18px;
+      height: 18px;
+      margin-left: 8px;
+      border: 3px solid #cbd5e1;
+      border-top-color: #1d4ed8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+    }
+    .loader.active { display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .message {
+      max-width: 86%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid transparent;
+    }
+    .user {
+      align-self: flex-end;
+      background: #e5e7eb;
+      color: #111827;
+      font-size: 18px;
+    }
+    .bot {
+      align-self: flex-start;
+      background: #fff;
+      border-color: #e5e7eb;
+      font-size: 17px;
+    }
+    .blocked {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #9f1239;
+    }
+    .result-image {
+      display: block;
+      width: min(320px, 100%);
+      max-height: 420px;
+      object-fit: contain;
+      margin-bottom: 18px;
+    }
+    form {
+      display: flex;
+      gap: 8px;
+      padding: 14px;
+      border-top: 1px solid #d7dde5;
+      background: #fff;
+    }
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+    }
+    button {
+      min-width: 72px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #111827;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #94a3b8;
+      cursor: wait;
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Guardrail Chatbot</h1>
+    </header>
+    <div class="status" id="status">&#45824;&#44592; &#51473;<span class="loader" id="loader"></span></div>
+    <section class="messages" id="messages"></section>
+    <form id="chat-form">
+      <input id="prompt" type="text" autocomplete="off" placeholder="&#47700;&#49884;&#51648;&#47484; &#51077;&#47141;&#54616;&#49464;&#50836;" />
+      <button id="send" type="submit">&#51204;&#49569;</button>
+    </form>
+  </main>
+
+  <script>
+    const TEXT = {
+      waiting: "\uB300\uAE30 \uC911",
+      guardrailChecking: "Guardrail \uAC80\uC0AC \uC911",
+      guardrailBlocked: "Guardrail \uCC28\uB2E8",
+      guardrailBlockedMessage: "Guardrail \uD310\uB2E8 \uACB0\uACFC \uBD80\uC801\uC808\uD55C \uC9C8\uBB38\uC785\uB2C8\uB2E4.",
+      guardrailError: "Guardrail \uAC80\uC0AC \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+      imageGenerating: "\uC774\uBBF8\uC9C0 \uC0DD\uC131 \uC911",
+      imageScoring: "\uC774\uBBF8\uC9C0 \uC810\uC218 \uACC4\uC0B0 \uC911",
+      imageError: "\uC774\uBBF8\uC9C0 \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+      imageScoreError: "\uC774\uBBF8\uC9C0\uB294 \uC0DD\uC131\uB410\uC9C0\uB9CC \uC810\uC218 \uACC4\uC0B0 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+      answerGenerating: "\uB2F5\uBCC0 \uC0DD\uC131 \uC911",
+      answerScoring: "\uB2F5\uBCC0 \uC810\uC218 \uACC4\uC0B0 \uC911",
+      answerError: "\uB2F5\uBCC0 \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+      done: "\uC644\uB8CC",
+      error: "\uC624\uB958",
+      generatedImage: "\uC0DD\uC131\uB41C \uC774\uBBF8\uC9C0",
+      imageScorePrefix: "\uC9C8\uBB38\uC5D0 \uB300\uD55C \uB2F5\uBCC0 \uC774\uBBF8\uC9C0 \uC810\uC218",
+      answerScorePrefix: "\uC9C8\uBB38\uC5D0 \uB300\uD55C \uB2F5\uBCC0 \uC810\uC218",
+      reason: "\uC774\uC720"
+    };
+
+    const form = document.querySelector("#chat-form");
+    const input = document.querySelector("#prompt");
+    const sendButton = document.querySelector("#send");
+    const messages = document.querySelector("#messages");
+    const statusText = document.querySelector("#status");
+    const loader = document.querySelector("#loader");
+
+    function setStatus(text, loading) {
+      statusText.firstChild.nodeValue = text;
+      loader.classList.toggle("active", loading);
+    }
+
+    function addTextMessage(text, type) {
+      const message = document.createElement("div");
+      message.className = `message ${type}`;
+      message.textContent = text;
+      messages.appendChild(message);
+      messages.scrollTop = messages.scrollHeight;
+      return message;
+    }
+
+    function addImageResult(imageUrl, score) {
+      const message = document.createElement("div");
+      message.className = "message bot";
+
+      const image = document.createElement("img");
+      image.className = "result-image";
+      image.src = imageUrl;
+      image.alt = TEXT.generatedImage;
+
+      const result = document.createElement("div");
+      result.textContent = `${TEXT.imageScorePrefix}: ${score.score}/100 \uC810\n${TEXT.reason}: ${score.reason}`;
+
+      message.appendChild(image);
+      message.appendChild(result);
+      messages.appendChild(message);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    async function requestJson(url, body) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await response.json().catch(() => ({}));
+      return { ok: response.ok, status: response.status, data };
+    }
+
+    function isImageRequest(prompt) {
+      const imageKeywords = [
+        "\uADF8\uB824", "\uADF8\uB9BC", "\uC774\uBBF8\uC9C0", "\uC0AC\uC9C4",
+        "\uC0DD\uC131", "\uADF8\uB824\uC918", "\uADF8\uB824\uB2EC\uB77C",
+        "draw", "image", "picture", "photo"
+      ];
+      return imageKeywords.some((keyword) => prompt.toLowerCase().includes(keyword.toLowerCase()));
+    }
+
+    async function handleImageRequest(prompt) {
+      setStatus(TEXT.imageGenerating, true);
+      const image = await requestJson("/api/v1/images/generations/", { prompt });
+
+      if (!image.ok) {
+        addTextMessage(image.data.detail || TEXT.imageError, "bot blocked");
+        setStatus(TEXT.error, false);
+        return;
+      }
+
+      setStatus(TEXT.imageScoring, true);
+      const score = await requestJson("/api/v1/images/score/url/", {
+        question: prompt,
+        image_url: image.data.url,
+      });
+
+      if (!score.ok) {
+        addTextMessage(TEXT.imageScoreError, "bot blocked");
+        setStatus(TEXT.error, false);
+        return;
+      }
+
+      addImageResult(image.data.url, score.data);
+      setStatus(TEXT.done, false);
+    }
+
+    async function handleTextRequest(prompt) {
+      setStatus(TEXT.answerGenerating, true);
+      const chat = await requestJson("/api/v1/chat/completions/", {
+        messages: [{ role: "user", content: prompt }],
+      });
+
+      if (!chat.ok) {
+        addTextMessage(chat.data.detail || TEXT.answerError, "bot blocked");
+        setStatus(TEXT.error, false);
+        return;
+      }
+
+      setStatus(TEXT.answerScoring, true);
+      const score = await requestJson("/api/v1/chat/score/", {
+        messages: [{ role: "user", content: prompt }],
+        answer: chat.data.content,
+      });
+
+      const scoreText = score.ok
+        ? `\n\n${TEXT.answerScorePrefix}: ${score.data.score}/100 \uC810\n${TEXT.reason}: ${score.data.reason}`
+        : "";
+
+      addTextMessage(`${chat.data.content}${scoreText}`, "bot");
+      setStatus(TEXT.done, false);
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const prompt = input.value.trim();
+      if (!prompt) return;
+
+      addTextMessage(prompt, "user");
+      input.value = "";
+      input.disabled = true;
+      sendButton.disabled = true;
+
+      try {
+        setStatus(TEXT.guardrailChecking, true);
+        const guardrail = await requestJson("/api/v1/chat/guardrail/", { prompt });
+
+        if (guardrail.status === 403 || guardrail.data.is_appropriate === false) {
+          addTextMessage(TEXT.guardrailBlockedMessage, "bot blocked");
+          setStatus(TEXT.guardrailBlocked, false);
+          return;
+        }
+
+        if (!guardrail.ok) {
+          addTextMessage(TEXT.guardrailError, "bot blocked");
+          setStatus(TEXT.error, false);
+          return;
+        }
+
+        if (isImageRequest(prompt)) {
+          await handleImageRequest(prompt);
+        } else {
+          await handleTextRequest(prompt);
+        }
+      } finally {
+        input.disabled = false;
+        sendButton.disabled = false;
+        input.focus();
+      }
+    });
+  </script>
+</body>
+</html>
