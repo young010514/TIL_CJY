@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        <h1>message : {{ hello }}</h1>
+        <input type="text" v-model="hello">
+        <p>
+            <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">{{ checked }}</label>
+        </p>
+        <p>
+            <div>{{ text }}</div>
+            <button v-on:click="changeText">클릭하면 글자가 변해</button>
+        </p>
+
+        <p><input type="text" @keyup="go"></p>
+
+    </div>
+
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const app = createApp ({
+            setup() {
+                const hello = ref("")
+                const checked = ref(false)
+                const text = ref("???")
+                const changeText=() => {
+                    text.value = (text.value==='짜잔') ? "???" : "짜잔"
+                }
+                function go(evt){
+                    console.log(evt.target.value)
+                }
+
+                // const message = ref("hello Vue");
+                
+                return {
+                    hello,
+                    checked,
+                    text,
+                    changeText,
+                    go
+                    
+                };
+            }
+        });
+        app.mount("#app")
+
+    </script>
+
+
+
+</body>
+</html>
