@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,django,python,venv
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,django,python,venv
+# Created by https://www.toptal.com/developers/gitignore/api/python,windows,django,venv,vuejs
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,windows,django,venv,vuejs
 
 ### Django ###
 *.log
@@ -275,6 +275,13 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -301,4 +308,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,django,python,venv
+# End of https://www.toptal.com/developers/gitignore/api/python,windows,django,venv,vuejs
