@@ -14,8 +14,8 @@
     <div v-html="rawHtml"></div>
     <div v-bind:id="dynamicId">attribute bindings</div>
     <p>{{ number + 1 }}</p>
-    <p>{{ ok ? 'YES' : 'NO' }}</p>
-    <p>{{ msg.split('').reverse().join('') }}</p>
+    <p>{{ ok ? "YES": "NO" }}</p>
+    <p></p>
     <div v-bind:id="`list-${id}`"></div>
   </div>
 
@@ -37,7 +37,7 @@
           dynamicId,
           number,
           ok,
-          id
+          id,
         }
       }
     })

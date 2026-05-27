@@ -10,7 +10,7 @@
 <body>
   <div id="app">
     <h1>{{ message }}</h1>
-    <h1>{{ message.split('').reverse().join('') }}</h1>
+    <h1>{{ message.split('').reverse().join('') }}</h1> <!-- 표현식 사용 가능! -->
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -19,9 +19,11 @@
 
     const app = createApp({
       setup() {
-        const message = ref('Hello vue!')
+        const message = ref('Hello Vue!')
+        console.log(message)
+        console.log(message.value)
         return {
-          message
+          message,
         }
       }
     })
