@@ -1,22 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ person.username }}의 프로필 페이지</h1>
+  <h1>{{ person.username }} Profile</h1>
   <div>
     <div>
-      팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
+      Followings: <span id="followings-count">{{ person.followings.count }}</span> /
+      Followers: <span id="followers-count">{{ person.followers.count }}</span>
     </div>
-    {% if request.user != person %}
+    {% if user.is_authenticated and request.user != person %}
       <div>
-        <form action="{% url 'accounts:follow' person.pk %}" method="POST">
+        <form id="follow-form" data-user-id="{{ person.pk }}" action="{% url 'accounts:follow' person.pk %}" method="POST">
           {% csrf_token %}
           {% if request.user in person.followers.all %}
-            <input type="submit" value="Unfollow">
+            <button id="follow-btn" type="submit">Unfollow</button>
           {% else %}
-            <input type="submit" value="Follow">
+            <button id="follow-btn" type="submit">Follow</button>
           {% endif %}
         </form>
       </div>
     {% endif %}
   </div>
+
+  {% if user.is_authenticated and request.user != person %}
+    <script>
+      const followForm = document.querySelector('#follow-form')
+      const followBtn = document.querySelector('#follow-btn')
+      const followersCount = document.querySelector('#followers-count')
+      const followingsCount = document.querySelector('#followings-count')
+
+      followForm.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const userId = followForm.dataset.userId
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+        axios({
+          method: 'post',
+          url: `/accounts/${userId}/follow/`,
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+          .then((response) => {
+            followBtn.textContent = response.data.is_followed ? 'Unfollow' : 'Follow'
+            followersCount.textContent = response.data.followers_count
+            followingsCount.textContent = response.data.followings_count
+          })
+          .catch(() => {
+            alert('팔로우 요청 처리 중 오류가 발생했습니다.')
+          })
+      })
+    </script>
+  {% endif %}
 {% endblock %}

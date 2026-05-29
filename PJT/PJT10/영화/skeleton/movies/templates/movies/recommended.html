@@ -1,5 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Recommended</h1>
+  <h1>Recommended Movies</h1>
+  <p>{{ recommendation_reason }}</p>
+  <hr>
+
+  {% for movie in movies %}
+    <div>
+      <h4>{{ movie.title }}</h4>
+      <p>
+        장르:
+        {% for genre in movie.genres.all %}
+          {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+      <p>인기 점수: {{ movie.popularity }} / 평점: {{ movie.vote_average }}</p>
+    </div>
+    <hr>
+  {% empty %}
+    <p>추천할 영화가 없습니다.</p>
+  {% endfor %}
 {% endblock %}

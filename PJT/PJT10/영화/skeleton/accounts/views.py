@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
+from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 
 
@@ -62,5 +63,25 @@ def profile(request, username):
 
 
 @login_required
+@require_POST
 def follow(request, user_pk):
-    pass
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+
+    is_followed = False
+    if request.user != person:
+        if request.user in person.followers.all():
+            person.followers.remove(request.user)
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+
+    data = {
+        'is_followed': is_followed,
+        'followers_count': person.followers.count(),
+        'followings_count': person.followings.count(),
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse(data)
+    return redirect('accounts:profile', person.username)

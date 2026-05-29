@@ -5,6 +5,7 @@ from django.views.decorators.http import (
     require_POST,
     require_http_methods,
 )
+from django.http import JsonResponse
 from .models import Review, Comment
 from .forms import ReviewForm, CommentForm
 
@@ -67,5 +68,22 @@ def create_comment(request, review_pk):
 
 
 @login_required
+@require_POST
 def like(request, review_pk):
-    pass
+    review = Review.objects.get(pk=review_pk)
+
+    is_liked = False
+    if request.user in review.like_users.all():
+        review.like_users.remove(request.user)
+    else:
+        review.like_users.add(request.user)
+        is_liked = True
+
+    data = {
+        'is_liked': is_liked,
+        'like_count': review.like_users.count(),
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse(data)
+    return redirect('community:index')

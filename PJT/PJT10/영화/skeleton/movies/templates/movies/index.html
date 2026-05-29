@@ -2,4 +2,70 @@
 
 {% block content %}
   <h1>Movies</h1>
+
+  <label for="genre-select">장르 선택:</label>
+  <select id="genre-select">
+    <option value="all">전체</option>
+    {% for genre in genres %}
+      <option value="{{ genre.pk }}">{{ genre.name }}</option>
+    {% endfor %}
+  </select>
+
+  <hr>
+
+  <div id="movie-list">
+    {% for movie in movies %}
+      <div>
+        <h4>{{ movie.title }}</h4>
+        <p>
+          장르:
+          {% for genre in movie.genres.all %}
+            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+      <hr>
+    {% endfor %}
+  </div>
+
+  <script>
+    const genreSelect = document.querySelector('#genre-select')
+    const movieList = document.querySelector('#movie-list')
+
+    const renderMovies = function (movies) {
+      if (!movies.length) {
+        movieList.innerHTML = '<p>해당 장르의 영화가 없습니다.</p>'
+        return
+      }
+
+      const movieHtml = movies.map((movie) => {
+        return `
+          <div>
+            <h4>${movie.title}</h4>
+            <p>장르: ${movie.genres.join(', ')}</p>
+          </div>
+          <hr>
+        `
+      }).join('')
+
+      movieList.innerHTML = movieHtml
+    }
+
+    genreSelect.addEventListener('change', function () {
+      const genreId = genreSelect.value
+      axios({
+        method: 'get',
+        url: '/movies/filter-genre/',
+        params: {
+          genre_id: genreId
+        }
+      })
+        .then((response) => {
+          renderMovies(response.data.movies)
+        })
+        .catch(() => {
+          alert('장르 필터링 요청 중 오류가 발생했습니다.')
+        })
+    })
+  </script>
 {% endblock %}
