@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="asdf">
+        <a v-bind:href="url" target="_blank">어디로 갈까</a>
+        <div>
+            <button v-on:click="setURLtoNaver">네이버</button>
+            <button v-on:click="setURLtoGoogle">구글</button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+            setup() {
+                const url = ref("");
+
+                function setURLtoNaver() {
+                    url.value = 'https://www.naver.com/'
+                }
+                function setURLtoGoogle() {
+                    url.value = 'https://www.google.com/?hl=ko'
+                }
+                return {
+                    url,
+                    setURLtoGoogle,
+                    setURLtoNaver
+                };
+            }
+        });
+        app.amount("#asdf");
+    </script>
+
+    
+</body>
+</html>

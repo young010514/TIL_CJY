@@ -12,11 +12,11 @@
 
 <body>
   <div id="app">
-    <!-- <p>{{ inputText1 }}</p>
-    <input :value="inputText1" @input="onInput"> -->
+    <p>{{ inputText1 }}</p>
+    <input :value="inputText1" @input="onInput">
 
-    <!-- <p>{{ inputText2 }}</p>
-    <input v-model="inputText2"> -->
+    <p>{{ inputText2 }}</p>
+    <input v-model="inputText2">
 
   </div>
 
@@ -26,17 +26,17 @@
 
     const app = createApp({
       setup() {
-        // const inputText1 = ref('')
-        // const inputText2 = ref('')
+        const inputText1 = ref('')
+        const inputText2 = ref('')
         
-        // const onInput = function (event) {
-        //   inputText1.value = event.currentTarget.value
-        // }
+        const onInput = function (event) {
+          inputText1.value = event.currentTarget.value
+        }
 
         return {
-          // inputText1,
-          // onInput,
-          // inputText2
+          inputText1,
+          onInput,
+          inputText2
         }
       }
     })

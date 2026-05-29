@@ -12,32 +12,32 @@
 <body>
   <div id="app">
     <!-- Inline Handlers -->
-    <!-- <button @click="count++">Add 1</button> -->
-    <!-- <p>Count: {{ count }}</p> -->
+    <button @click="count++">Add 1</button>
+    <p>Count: {{ count }}</p>
 
     <!-- Method Handlers -->
-    <!-- <button @click="increase">Hello</button> -->
-    <!-- <button @click="myFunc">Hello</button> -->
-    <!-- <button @click="greeting('hello')">Say hello</button> -->
-    <!-- <button @click="greeting('bye')">Say bye</button> -->
+    <button @click="increase">Hello</button>
+    <button @click="myFunc">Hello</button>
+    <button @click="greeting('hello')">Say hello</button>
+    <button @click="greeting('bye')">Say bye</button>
 
     <!-- Accessing Event Argument in Inline Handlers -->
-    <!-- <button @click="warning('경고입니다', $event)">Warning</button> -->
-    <!-- <button @click="danger('위험', $event, '합니다')">Danger</button> -->
+    <button @click="warning('경고입니다', $event)">Warning</button>
+    <button @click="danger('위험', $event, '합니다')">Danger</button>
 
     <!-- event modifiers -->
-    <!-- <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit">
       <input type="submit">
-    </form> -->
+    </form>
 
-    <!-- <div v-on:click="detectBubble">
+    <div v-on:click="detectBubble">
       <a href="https://www.google.com/">onLink</a><br>
       <a @click.prevent="onLink" href="https://www.google.com/">onLink</a><br>
       <a @click.stop.prevent="onLink" href="https://www.google.com/">onLink</a>
-    </div> -->
+    </div>
 
     <!-- key modifiers -->
-    <!-- <input @keyup.enter="onSubmit"> -->
+    <input @keyup.enter="onSubmit">
 
   </div>
 
@@ -47,56 +47,56 @@
 
     const app = createApp({
       setup() {
-        // const count = ref(0)
+        const count = ref(0)
         
-        // const increase = function () {
-        //   count.value += 1
-        // }
+        const increase = function () {
+          count.value += 1
+        }
 
-        // const name = ref('Alice')
+        const name = ref('Alice')
 
-        // const myFunc = function (event) {
-        //   console.log(event)
-        //   console.log(event.currentTarget)
-        //   console.log(name.value)
-        // }
+        const myFunc = function (event) {
+          console.log(event)
+          console.log(event.currentTarget)
+          console.log(name.value)
+        }
         
-        // const greeting = function (message) {
-        //   console.log(message)
-        // }
+        const greeting = function (message) {
+          console.log(message)
+        }
 
-        // const warning = function (message, event) {
-        //   console.log(message)
-        //   console.log(event)
-        // }
+        const warning = function (message, event) {
+          console.log(message)
+          console.log(event)
+        }
 
-        // const danger = function (msg1, event, msg2) {
-        //   console.log(msg1)
-        //   console.log(event)
-        //   console.log(msg2)
-        // }
+        const danger = function (msg1, event, msg2) {
+          console.log(msg1)
+          console.log(event)
+          console.log(msg2)
+        }
 
-        // const onSubmit = function () {
-        //   console.log('onSubmit')
-        // }
+        const onSubmit = function () {
+          console.log('onSubmit')
+        }
 
-        // const detectBubble = function () {
-        //   console.log('detectBubble')
-        // }
+        const detectBubble = function () {
+          console.log('detectBubble')
+        }
 
-        // const onLink = function () {
-        //   console.log('onLink')
-        // }
+        const onLink = function () {
+          console.log('onLink')
+        }
         return {
-          // count,
-          // increase,
-          // greeting,
-          // warning,
-          // danger,
-          // myFunc,
-          // onSubmit,
-          // detectBubble,
-          // onLink
+          count,
+          increase,
+          greeting,
+          warning,
+          danger,
+          myFunc,
+          onSubmit,
+          detectBubble,
+          onLink
         }
       }
     })

@@ -10,22 +10,23 @@
 <body>
   <div id="app">
     <!-- template syntax -->
-    <!-- <p>Message: {{ msg }}</p> -->
-    <!-- <div v-html="rawHtml"></div> -->
-    <!-- <div v-bind:id="dynamicId"></div> -->
-    <!-- {{ number + 1 }} -->
-    <!-- {{ ok ? 'YES' : 'NO' }} -->
-    <!-- {{ msg.split('').reverse().join('') }} -->
+    <p>Message: {{ msg }}</p>
+    <div v-html="rawHtml"></div>
+    <div>{{ rawHtml }}</div>
+    <div v-bind:id="dynamicId">dynamic ID</div>
+    {{ number + 1 }}
+    {{ ok ? 'YES' : 'NO' }}
+    {{ msg.split('').reverse().join('') }}
 
     <!-- directive -->
-    <!-- <div v-bind:id="`list-${id}`"></div> -->
-    <!-- <p v-if="seen">Hi there</p> -->
-    <!-- <a v-bind:href="myUrl">Link</a> -->
-    <!-- <button v-on:click="doSomething">button</button> -->
+    <div v-bind:id="`list-${id}`">{{ id }}</div>
+    <p v-if="seen">Hi there</p>
+    <a v-bind:href="myUrl">Link</a>
+    <button v-on:click="doSomething">button</button>
 
-    <!-- <form v-on:submit.prevent="onSubmit">
+    <form v-on:submit.prevent="onSubmit">
       <input type="submit">
-    </form> -->
+    </form>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -34,33 +35,33 @@
 
     const app = createApp({
       setup() {
-        // const msg = 'Hello'
-        // const rawHtml = ref('<span style="color:red">This should be red.</span>')
-        // const dynamicId = ref('my-id')
-        // const number = ref(1)
-        // const ok = ref(true)
-        // const seen = ref(true)
-        // const id = ref(100)
-        // const myUrl = 'https://www.google.co.kr/'
+        const msg = 'Hello'
+        const rawHtml = ref('<span style="color:red">This should be red.</span>')
+        const dynamicId = ref('my-id')
+        const number = ref(1)
+        const ok = ref(true)
+        const seen = ref(true)
+        const id = ref(100)
+        const myUrl = 'https://www.google.co.kr/'
 
-        // const doSomething = function () {
-        //   console.log('button clicked')
-        // }
+        const doSomething = function () {
+          console.log('button clicked')
+        }
 
-        // const onSubmit = function () {
-        //   console.log('form submitted')
-        // }
+        const onSubmit = function () {
+          console.log('form submitted')
+        }
         return {
-          // msg,
-          // rawHtml,
-          // dynamicId,
-          // seen,
-          // number,
-          // ok,
-          // id,
-          // myUrl,
-          // doSomething,
-          // onSubmit,
+          msg,
+          rawHtml,
+          dynamicId,
+          seen,
+          number,
+          ok,
+          id,
+          myUrl,
+          doSomething,
+          onSubmit,
         }
       }
     })
